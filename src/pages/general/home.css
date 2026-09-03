@@ -116,9 +116,17 @@ body {
   pointer-events: auto;
 }
 
-.visit-store-btn:active {
-  transform: scale(0.96);
-  background: #cb202d;
+.visit-store-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 18px;
+  background: #e23744; /* Zomato Red */
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(226, 55, 68, 0.4);
 }
 
 /* Floating Actions (Right Side) */

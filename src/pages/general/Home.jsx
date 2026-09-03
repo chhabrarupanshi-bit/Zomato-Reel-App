@@ -259,7 +259,7 @@ const Home = () => {
               padding: "16px",
             }}
           >
-            <div className="reel-content" style={{ marginTop: "auto", pointerEvents: "auto" }}>
+            <div className="reel-content" style={{ marginTop: "auto", pointerEvents: "auto" , marginBottom: "75px" , zIndex: 10 }}>
               <h3 className="reel-title">{item.name || item.title || "Special Dish"}</h3>
               <p className="reel-description">{item.description}</p>
             </div>
