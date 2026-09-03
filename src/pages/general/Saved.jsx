@@ -3,7 +3,17 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "./home.css";
 
-const Icon = ({ name, filled = false }) => {
+// Fallback dummy saved item (Jab tak backend live na ho)
+const demoSavedFood = [
+  {
+    _id: "demo-1",
+    vedios: "https://ik.imagekit.io/odlhfbqhh/141e60f7-a2e8-4106-8c6c-fc3ac5fdb6d1_pjKVvByee.mp4",
+    name: "Delicious Pizza",
+    description: "Freshly baked wood-fired pizza with extra cheese!",
+  }
+];
+
+const Icon = ({ name, size = 22, filled = false }) => {
   const paths = {
     home: (
       <path
@@ -36,7 +46,7 @@ const Icon = ({ name, filled = false }) => {
   };
 
   return (
-    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden="true">
       {paths[name]}
     </svg>
   );
@@ -51,19 +61,22 @@ const Saved = () => {
     axios
       .get("http://localhost:3000/api/food/saved-items", { withCredentials: true })
       .then((res) => {
-        if (res.data?.savedFoods) {
+        if (res.data?.savedFoods && res.data.savedFoods.length > 0) {
           setSavedFoods(res.data.savedFoods);
+        } else {
+          setSavedFoods(demoSavedFood);
         }
       })
       .catch((err) => {
-        console.error("Failed to load saved items:", err);
+        console.warn("Backend connect nahi hua, demo saved item loading:", err.message);
+        setSavedFoods(demoSavedFood);
       })
       .finally(() => {
         setLoading(false);
       });
   }, []);
 
-  // 2. Database se remove karna (/api/food/save POST call)
+  // 2. Database / state se remove karna
   const removeSaved = async (foodId) => {
     try {
       await axios.post(
@@ -71,12 +84,11 @@ const Saved = () => {
         { foodId },
         { withCredentials: true }
       );
-
-      // State se item drop karna
-      setSavedFoods((prev) => prev.filter((item) => item._id !== foodId));
     } catch (err) {
-      console.error("Delete failed:", err.response?.data || err.message);
+      console.warn("Backend offline, removing from local screen state:", err.message);
     }
+    // Local state se drop karna
+    setSavedFoods((prev) => prev.filter((item) => item._id !== foodId));
   };
 
   return (
@@ -91,7 +103,7 @@ const Saved = () => {
         <div style={{ textAlign: "center", color: "#888", marginTop: 40 }}>Loading saved dishes...</div>
       ) : savedFoods.length === 0 ? (
         <section className="saved-empty">
-          <Icon name="bookmark" />
+          <Icon name="bookmark" size={48} />
           <h2>No saved videos yet</h2>
           <p>Tap the bookmark icon on a food video to save it here.</p>
           <Link to="/home" className="browse-btn">
@@ -122,7 +134,7 @@ const Saved = () => {
                   onClick={() => removeSaved(food._id)}
                   aria-label={`Remove ${food.name} from saved videos`}
                 >
-                  <Icon name="trash" />
+                  <Icon name="trash" size={20} />
                 </button>
               </div>
             </article>
@@ -130,13 +142,14 @@ const Saved = () => {
         </section>
       )}
 
-      <nav className="bottom-nav saved-nav" aria-label="Main navigation">
+      {/* Persistent Bottom Nav */}
+      <nav className="bottom-nav">
         <Link to="/home" className="nav-item">
-          <Icon name="home" />
+          <Icon name="home" size={24} />
           <span>Home</span>
         </Link>
         <Link to="/saved" className="nav-item active">
-          <Icon name="bookmark" filled />
+          <Icon name="bookmark" size={24} filled />
           <span>Saved</span>
         </Link>
       </nav>

@@ -219,3 +219,137 @@ body {
   width: 24px !important;
   height: 24px !important;
 }
+
+/* --- SAVED PAGE SPECIFIC STYLING --- */
+
+.saved-page {
+  width: 100vw;
+  max-width: 430px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  background: #0f0f0f;
+  color: #ffffff;
+  padding: 24px 16px 90px 16px; /* Bottom space for navbar */
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.saved-header {
+  margin-bottom: 20px;
+}
+
+.saved-kicker {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #e23744;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.saved-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.saved-header p {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Empty State */
+.saved-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 80px;
+  gap: 12px;
+}
+
+.saved-empty svg {
+  width: 48px;
+  height: 48px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.saved-empty h2 {
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+
+.saved-empty p {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 260px;
+}
+
+.browse-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: #e23744;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 25px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Saved Grid Cards */
+.saved-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.saved-card {
+  background: #1a1a1a;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.saved-card video {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.saved-card-info {
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.saved-card-info h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+.saved-card-info p {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.remove-saved {
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #e23744;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.remove-saved:active {
+  background: rgba(226, 55, 68, 0.15);
+}
