@@ -7,18 +7,25 @@ import "./home.css";
 const demoVideos = [
   {
     _id: "demo-1",
-    vedios: "https://assets.mixkit.co/videos/preview/mixkit-serving-dinner-to-a-customer-in-a-restaurant-41551-large.mp4",
+    vedios: "https://ik.imagekit.io/odlhfbqhh/141e60f7-a2e8-4106-8c6c-fc3ac5fdb6d1_pjKVvByee.mp4",
     name: "Delicious Pizza",
     description: "Freshly baked wood-fired pizza with extra cheese!",
     foodPartner: "123",
   },
   {
     _id: "demo-2",
-    vedios: "https://assets.mixkit.co/videos/preview/mixkit-chef-preparing-a-salad-41550-large.mp4",
-    name: "Fresh Greek Salad",
-    description: "Crisp veggies topped with fresh feta & olive oil.",
+    vedios: "https://ik.imagekit.io/odlhfbqhh/5308434c-a374-4502-899e-3b6390151cc0_MzmW4gGtO.mp4",
+    name: "Lemonade Juice",
+    description: "Refreshing lemonade with a hint of mint.",
     foodPartner: "456",
   },
+  {
+    _id: "demo-3",
+    vedios: "https://ik.imagekit.io/odlhfbqhh/c124e308-bc62-44cf-8a43-5901e7929250_uvRWAkZ7c.mp4",
+    name: "Tasty Burger",
+    description: "healthy and juicy burger with fresh ingredients.",
+    foodPartner: "789",
+  }
 ];
 
 // 2. SVG Icon component
@@ -74,7 +81,7 @@ const Home = () => {
   const [likedIds, setLikedIds] = useState([]);
   const [likeCounts, setLikeCounts] = useState({});
   const [likeError, setLikeError] = useState("");
-  
+
   // Database se sync hone wali saved IDs
   const [savedIds, setSavedIds] = useState([]);
 
@@ -82,24 +89,29 @@ const Home = () => {
   const videoElementsRef = useRef([]);
 
   // --- 1. BACKEND SE VIDEOS AUR USER KA SAVED/LIKED DATA LAANA ---
+  // --- 1. BACKEND SE VIDEOS AUR USER KA SAVED/LIKED DATA LAANA ---
   useEffect(() => {
     axios
       .get("http://localhost:3000/api/food/get-items", { withCredentials: true })
       .then((response) => {
-        if (response.data && response.data.foodItems) {
+        if (response.data && response.data.foodItems && response.data.foodItems.length > 0) {
           setVideos(response.data.foodItems);
 
-          // Agar backend se logged-in user ki saved IDs list aa rahi ho:
           if (response.data.userSavedIds) {
             setSavedIds(response.data.userSavedIds);
           }
           if (response.data.userLikedIds) {
             setLikedIds(response.data.userLikedIds);
           }
+        } else {
+          // Agar backend empty list bheje
+          setVideos(demoVideos);
         }
       })
       .catch((error) => {
-        console.error("Backend fetch error:", error);
+        console.warn("Backend connect nahi hua, showing demo videos:", error.message);
+        // Fail hone par demo videos load honge
+        setVideos(demoVideos);
       });
   }, []);
 
@@ -110,7 +122,7 @@ const Home = () => {
         entries.forEach((entry) => {
           const video = entry.target;
           if (entry.isIntersecting) {
-            video.play().catch(() => {});
+            video.play().catch(() => { });
           } else {
             video.pause();
           }
@@ -222,6 +234,7 @@ const Home = () => {
             className="reel-video"
             loop
             muted
+            autoPlay
             playsInline
             onClick={handleVideoClick}
           />
