@@ -25,6 +25,14 @@ const demoVideos = [
     name: "Rice Bowl",
     description: "Healthy and delicious rice bowl with fresh ingredients.",
     foodPartner: "789",
+  },
+  {
+    _id: "demo-4",
+    vedios: "https://ik.imagekit.io/odlhfbqhh/b1045eb7-b97c-4c05-a2e3-edcd92df616d_IAcRDrSjY.mp4",
+    name: "Paranthe",
+    description: "Delicious and fluffy paranthas with a variety of fillings.",
+    foodPartner: "012",
+  
   }
 ];
 
