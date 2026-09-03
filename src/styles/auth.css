@@ -6,19 +6,20 @@
   --auth-surface-alt: #f6f9ff;
   --auth-visual-grad: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(14, 165, 233, 0.04));
   position: relative;
-  min-height: 100dvh;
+  height: 100dvh !important;       /* Viewport height lock */
   width: 100% !important;
   max-width: 100% !important;
   margin: 0 !important;
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex !important;         /* Flex container for natural scrolling */
+  flex-direction: column !important;
   background: #ffffff !important;
   color: #0f172a;
-  border-radius: 0 !important; /* Corners ka curve bilkul khatam */
+  border-radius: 0 !important;
   border: none !important;
   box-shadow: none !important;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;     /* Container ke andar smooth scroll allow */
+  -webkit-overflow-scrolling: touch;
 }
 
 .auth-shell.user-theme {
