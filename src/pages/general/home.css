@@ -175,4 +175,47 @@ body {
   font-weight: 600;
   color: #ffffff;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+} 
+
+/* Bottom Navigation Bar */
+.bottom-nav {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 100% !important;
+  max-width: 430px !important;
+  height: 65px !important;
+  background: rgba(10, 10, 10, 0.9) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex !important;
+  justify-content: space-around !important;
+  align-items: center !important;
+  z-index: 99999 !important; /* Har cheez ke upar rahega */
+  pointer-events: auto !important;
+}
+
+.nav-item {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+  text-decoration: none !important;
+  font-size: 0.78rem !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+}
+
+.nav-item.active {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.nav-item svg {
+  width: 24px !important;
+  height: 24px !important;
 }
