@@ -32,12 +32,11 @@ const demoVideos = [
     name: "Paranthe",
     description: "Delicious and fluffy paranthas with a variety of fillings.",
     foodPartner: "012",
-  
-  }
+  },
 ];
 
 // 2. SVG Icon component
-const Icon = ({ name, size = 24, filled = false }) => {
+const Icon = ({ name, size = 28, filled = false }) => {
   const paths = {
     heart: (
       <path
@@ -89,15 +88,12 @@ const Home = () => {
   const [likedIds, setLikedIds] = useState([]);
   const [likeCounts, setLikeCounts] = useState({});
   const [likeError, setLikeError] = useState("");
-
-  // Database se sync hone wali saved IDs
   const [savedIds, setSavedIds] = useState([]);
 
   const containerRef = useRef(null);
   const videoElementsRef = useRef([]);
 
-  // --- 1. BACKEND SE VIDEOS AUR USER KA SAVED/LIKED DATA LAANA ---
-  // --- 1. BACKEND SE VIDEOS AUR USER KA SAVED/LIKED DATA LAANA ---
+  // --- 1. BACKEND SE VIDEOS AUR USER DATA FETCH ---
   useEffect(() => {
     axios
       .get("http://localhost:3000/api/food/get-items", { withCredentials: true })
@@ -112,25 +108,23 @@ const Home = () => {
             setLikedIds(response.data.userLikedIds);
           }
         } else {
-          // Agar backend empty list bheje
           setVideos(demoVideos);
         }
       })
       .catch((error) => {
-        console.warn("Backend connect nahi hua, showing demo videos:", error.message);
-        // Fail hone par demo videos load honge
+        console.warn("Backend offline, fallback demo videos active:", error.message);
         setVideos(demoVideos);
       });
   }, []);
 
-  // --- 2. INTERSECTION OBSERVER (AUTOPLAY/PAUSE ON SCROLL) ---
+  // --- 2. INTERSECTION OBSERVER (SCROLL PE AUTOPLAY/PAUSE) ---
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           const video = entry.target;
           if (entry.isIntersecting) {
-            video.play().catch(() => { });
+            video.play().catch(() => {});
           } else {
             video.pause();
           }
@@ -156,7 +150,7 @@ const Home = () => {
     }
   };
 
-  // --- 4. LIKE BUTTON TOGGLE (DATABASE CALL) ---
+  // --- 4. LIKE BUTTON TOGGLE ---
   const toggleLike = async (id) => {
     setLikeError("");
 
@@ -166,8 +160,6 @@ const Home = () => {
         { foodId: id },
         { withCredentials: true }
       );
-
-      console.log("Like response:", response.data);
 
       setLikedIds((current) => {
         const isLiked = response.data.liked;
@@ -186,10 +178,8 @@ const Home = () => {
     }
   };
 
-  // --- 5. SAVE / BOOKMARK BUTTON TOGGLE (DATABASE CALL) ---
+  // --- 5. SAVE / BOOKMARK BUTTON TOGGLE ---
   const toggleSave = async (foodId) => {
-    console.log("--> [SAVE START] Triggered for Food ID:", foodId);
-
     try {
       const response = await axios.post(
         "http://localhost:3000/api/food/save",
@@ -197,9 +187,6 @@ const Home = () => {
         { withCredentials: true }
       );
 
-      console.log("--> [SAVE SUCCESS] Database Response:", response.data);
-
-      // Backend boolean flag bhejta hai (saved: true/false) ya message
       setSavedIds((current) => {
         const isSaved = response.data.saved ?? !current.includes(foodId);
         if (isSaved && !current.includes(foodId)) {
@@ -209,7 +196,7 @@ const Home = () => {
         }
       });
     } catch (error) {
-      console.error("--> [SAVE ERROR] Failed to save in DB:", error.response?.data || error.message);
+      console.error("Save error:", error.response?.data || error.message);
     }
   };
 
@@ -235,7 +222,7 @@ const Home = () => {
       )}
 
       {videos.map((item, index) => (
-        <div className="reel-card" key={item._id} style={{ position: "relative" }}>
+        <div className="reel-card" key={item._id}>
           <video
             ref={(el) => (videoElementsRef.current[index] = el)}
             src={item.vedios || item.video || item.videoUrl}
@@ -247,46 +234,28 @@ const Home = () => {
             onClick={handleVideoClick}
           />
 
-          <div
-            className="reel-overlay"
-            style={{
-              position: "absolute",
-              inset: 0,
-              pointerEvents: "none",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              padding: "16px",
-            }}
-          >
-            <div className="reel-content" style={{ marginTop: "auto", pointerEvents: "auto" , marginBottom: "75px" , zIndex: 10 }}>
+          <div className="reel-overlay">
+            {/* Title, Description & Visit Store Button (Above bottom nav) */}
+            <div className="reel-content">
               <h3 className="reel-title">{item.name || item.title || "Special Dish"}</h3>
               <p className="reel-description">{item.description}</p>
+              
+              <Link
+                to={`/food-partner/${item.foodPartner || item.partnerId}`}
+                className="visit-store-btn"
+                onClick={(e) => e.stopPropagation()}
+              >
+                Visit Store
+              </Link>
             </div>
 
-            <div
-              className="reel-actions"
-              style={{
-                position: "absolute",
-                right: "16px",
-                bottom: "80px",
-                zIndex: 100,
-                pointerEvents: "auto",
-                display: "flex",
-                flexDirection: "column",
-                gap: "16px",
-              }}
-            >
+            {/* Right Side Floating Actions */}
+            <div className="reel-actions">
               {/* Like Button */}
               <button
                 type="button"
                 className={`reel-action ${likedIds.includes(item._id) ? "is-active" : ""}`}
                 style={{
-                  cursor: "pointer",
-                  pointerEvents: "auto",
-                  background: "transparent",
-                  border: "none",
-                  outline: "none",
                   color: likedIds.includes(item._id) ? "#ff2d55" : "#ffffff",
                 }}
                 onClick={(e) => {
@@ -294,22 +263,15 @@ const Home = () => {
                   toggleLike(item._id);
                 }}
               >
-                <Icon name="heart" filled={likedIds.includes(item._id)} />
-                <span style={{ display: "block", fontSize: "12px", color: "#ffffff" }}>
-                  {Math.max(0, likeCounts[item._id] ?? item.likeCount ?? 0)}
-                </span>
+                <Icon name="heart" size={30} filled={likedIds.includes(item._id)} />
+                <span>{Math.max(0, likeCounts[item._id] ?? item.likeCount ?? 0)}</span>
               </button>
 
-              {/* Save / Bookmark Button - Database Connected */}
+              {/* Save Button */}
               <button
                 type="button"
                 className={`reel-action ${savedIds.includes(item._id) ? "is-active" : ""}`}
                 style={{
-                  cursor: "pointer",
-                  pointerEvents: "auto",
-                  background: "transparent",
-                  border: "none",
-                  outline: "none",
                   color: savedIds.includes(item._id) ? "#ffd700" : "#ffffff",
                 }}
                 onClick={(e) => {
@@ -317,50 +279,32 @@ const Home = () => {
                   toggleSave(item._id);
                 }}
               >
-                <Icon name="bookmark" filled={savedIds.includes(item._id)} />
-                <span style={{ display: "block", fontSize: "12px", color: "#ffffff" }}>
-                  {savedIds.includes(item._id) ? "Saved" : "Save"}
-                </span>
+                <Icon name="bookmark" size={30} filled={savedIds.includes(item._id)} />
+                <span>{savedIds.includes(item._id) ? "Saved" : "Save"}</span>
               </button>
 
               {/* Comment Button */}
               <button
                 type="button"
                 className="reel-action"
-                style={{
-                  cursor: "pointer",
-                  pointerEvents: "auto",
-                  background: "transparent",
-                  border: "none",
-                  outline: "none",
-                  color: "#ffffff",
-                }}
                 onClick={(e) => e.stopPropagation()}
               >
-                <Icon name="comment" />
-                <span style={{ display: "block", fontSize: "12px" }}>45</span>
+                <Icon name="comment" size={30} />
+                <span>45</span>
               </button>
             </div>
-
-            <Link
-              to={`/food-partner/${item.foodPartner || item.partnerId}`}
-              className="visit-store-btn"
-              style={{ pointerEvents: "auto", alignSelf: "flex-start", marginTop: "8px" }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              Visit Store
-            </Link>
           </div>
         </div>
       ))}
 
-      <nav className="bottom-nav" style={{ zIndex: 1000, pointerEvents: "auto" }}>
+      {/* Bottom Navigation */}
+      <nav className="bottom-nav">
         <Link to="/home" className="nav-item active">
-          <Icon name="home" filled />
+          <Icon name="home" size={24} filled />
           <span>Home</span>
         </Link>
         <Link to="/saved" className="nav-item">
-          <Icon name="bookmark" />
+          <Icon name="bookmark" size={24} />
           <span>Saved</span>
         </Link>
       </nav>
