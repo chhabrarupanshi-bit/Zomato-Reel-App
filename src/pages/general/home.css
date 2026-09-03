@@ -220,10 +220,8 @@ body {
   height: 24px !important;
 }
 
-/* --- SAVED PAGE SPECIFIC STYLING --- */
-
 /* =========================================
-   SAVED PAGE - VIDEO FIX
+   SAVED PAGE - MODERN ZOMATO LOOK
 ========================================= */
 
 .saved-page {
@@ -231,69 +229,152 @@ body {
   max-width: 430px;
   min-height: 100dvh;
   margin: 0 auto;
-  padding: 24px 16px 90px;
-  background: #000;
-  color: #fff;
+  padding: 24px 16px 100px;
+  background: #0f0f11;
+  color: #ffffff;
   overflow-y: auto;
   box-sizing: border-box;
 }
 
-/* Saved cards ko proper grid mein rakhega */
+.saved-header {
+  margin-bottom: 20px;
+}
+
+.saved-kicker {
+  font-size: 0.72rem;
+  letter-spacing: 1.2px;
+  color: #e23744;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.saved-header h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+}
+
+.saved-header p {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+}
+
+/* Saved Grid Cards */
 .saved-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 18px;
-  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 14px;
 }
 
-/* Card ki width control karega */
 .saved-card {
+  position: relative;
   width: 100%;
+  background: #1a1a1f;
+  border-radius: 16px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 18px;
-  background: #191a1f;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
-/* ⭐ MAIN VIDEO FIX ⭐ */
+/* 16:9 Sleek Video Banner */
 .saved-card video {
-  display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 5;
+  height: 200px;
   object-fit: cover;
+  display: block;
   background: #000;
 }
 
-/* Video ke neeche name + description */
+/* Card Content Details */
 .saved-card-info {
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
-  gap: 10px;
-  padding: 14px;
+  align-items: center;
+  padding: 14px 16px;
 }
 
 .saved-card-info h2 {
-  margin: 0 0 5px;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 4px 0;
 }
 
 .saved-card-info p {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.65);
   margin: 0;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.78rem;
-  line-height: 1.4;
+  max-width: 280px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Delete button */
+/* Delete Trash Button */
 .remove-saved {
-  flex-shrink: 0;
-  border: 0;
-  padding: 5px;
-  color: #ff8c8c;
-  background: transparent;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(226, 55, 68, 0.15);
+  color: #e23744;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.remove-saved:active {
+  transform: scale(0.9);
+  background: rgba(226, 55, 68, 0.3);
+}
+
+/* Empty Collection State */
+.saved-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 16px 0;
+  gap: 12px;
+}
+
+.saved-empty svg {
+  color: rgba(255, 255, 255, 0.25);
+  margin-bottom: 8px;
+}
+
+.saved-empty h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.saved-empty p {
+  font-size: 0.86rem;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 250px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.browse-btn {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 10px 22px;
+  background: #e23744;
+  color: #ffffff !important;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 25px;
+  box-shadow: 0 4px 14px rgba(226, 55, 68, 0.4);
 }
