@@ -21,9 +21,9 @@ const demoVideos = [
   },
   {
     _id: "demo-3",
-    vedios: "https://ik.imagekit.io/odlhfbqhh/c124e308-bc62-44cf-8a43-5901e7929250_uvRWAkZ7c.mp4",
-    name: "Tasty Burger",
-    description: "healthy and juicy burger with fresh ingredients.",
+    vedios: "https://ik.imagekit.io/odlhfbqhh/9218f706-fd46-47c6-a0c9-109344e74684_4iS-s_r_H.mp4",
+    name: "Rice Bowl",
+    description: "Healthy and delicious rice bowl with fresh ingredients.",
     foodPartner: "789",
   }
 ];
