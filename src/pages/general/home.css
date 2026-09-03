@@ -222,76 +222,78 @@ body {
 
 /* --- SAVED PAGE SPECIFIC STYLING --- */
 
-/* Saved Page Text & Visibility Fix */
+/* =========================================
+   SAVED PAGE - VIDEO FIX
+========================================= */
+
 .saved-page {
-  width: 100vw;
+  width: 100%;
   max-width: 430px;
   min-height: 100dvh;
   margin: 0 auto;
-  background: #000000 !important;
-  color: #ffffff !important;
-  padding: 24px 16px 90px 16px;
+  padding: 24px 16px 90px;
+  background: #000;
+  color: #fff;
   overflow-y: auto;
   box-sizing: border-box;
 }
 
-.saved-header h1 {
-  font-size: 1.6rem !important;
-  font-weight: 700;
-  color: #ffffff !important; /* Pure White */
-  margin: 6px 0;
+/* Saved cards ko proper grid mein rakhega */
+.saved-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin-top: 24px;
 }
 
-.saved-header p {
-  font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.7) !important; /* Soft White */
+/* Card ki width control karega */
+.saved-card {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  background: #191a1f;
 }
 
-.saved-kicker {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  color: #e23744 !important; /* Red Highlight */
-  font-weight: 700;
+/* ⭐ MAIN VIDEO FIX ⭐ */
+.saved-card video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: #000;
 }
 
-/* Empty State Visibility */
-.saved-empty {
+/* Video ke neeche name + description */
+.saved-card-info {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin-top: 70px;
-  gap: 12px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px;
 }
 
-.saved-empty svg {
-  color: rgba(255, 255, 255, 0.4) !important;
+.saved-card-info h2 {
+  margin: 0 0 5px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
 }
 
-.saved-empty h2 {
-  font-size: 1.25rem !important;
-  color: #ffffff !important;
-  margin-top: 10px;
-}
-
-.saved-empty p {
-  font-size: 0.88rem !important;
-  color: rgba(255, 255, 255, 0.65) !important;
-  max-width: 260px;
+.saved-card-info p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.78rem;
   line-height: 1.4;
 }
 
-.browse-btn {
-  display: inline-block;
-  margin-top: 14px;
-  padding: 10px 22px;
-  background: #e23744 !important;
-  color: #ffffff !important;
-  text-decoration: none;
-  border-radius: 25px;
-  font-size: 0.88rem;
-  font-weight: 600;
-  box-shadow: 0 4px 14px rgba(226, 55, 68, 0.4);
+/* Delete button */
+.remove-saved {
+  flex-shrink: 0;
+  border: 0;
+  padding: 5px;
+  color: #ff8c8c;
+  background: transparent;
+  cursor: pointer;
 }
