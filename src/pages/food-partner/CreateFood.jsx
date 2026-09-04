@@ -71,12 +71,19 @@ const CreateFood = () => {
       return;
     }
 
+    // Saari possible keys check karein jo aapke login code mein ho sakti hain
+    const token =
+      localStorage.getItem("foodPartnertoken") ||
+      localStorage.getItem("token") ||
+      localStorage.getItem("partnerToken") ||
+      localStorage.getItem("partner_token");
+
+    console.log("Token sent in create-food header:", token);
+
     const submitData = new FormData();
     submitData.append('vedios', formData.vedios);
     submitData.append('name', formData.name);
     submitData.append('description', formData.description);
-
-    const token = localStorage.getItem("foodPartnertoken") || localStorage.getItem("token");
 
     try {
       const response = await axios.post(
