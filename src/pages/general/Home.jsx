@@ -95,9 +95,16 @@ const Home = () => {
 
   // --- 1. BACKEND SE VIDEOS AUR USER DATA FETCH ---
   useEffect(() => {
+    const token = localStorage.getItem("token") || localStorage.getItem("foodPartnertoken");
+
     axios
-      .get("https://zomato-reel-app-backend.vercel.app/api/food/get-items", { withCredentials: true })
+      .get("https://zomato-reel-app-backend.vercel.app/api/food/get-items", {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        withCredentials: true,
+      })
       .then((response) => {
+        console.log("=== FEED API RESPONSE ===", response.data);
+
         if (response.data && response.data.foodItems && response.data.foodItems.length > 0) {
           setVideos(response.data.foodItems);
 
@@ -108,16 +115,17 @@ const Home = () => {
             setLikedIds(response.data.userLikedIds);
           }
         } else {
+          console.warn("No food items returned, using fallback demo videos.");
           setVideos(demoVideos);
         }
       })
       .catch((error) => {
-        console.warn("Backend offline, fallback demo videos active:", error.message);
+        console.error("Feed API error:", error.response?.data || error.message);
         setVideos(demoVideos);
       });
   }, []);
 
-  // --- 2. INTERSECTION OBSERVER (SCROLL PE AUTOPLAY/PAUSE) ---
+  // --- 2. INTERSECTION OBSERVER (AUTOPLAY/PAUSE ON SCROLL) ---
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -153,14 +161,18 @@ const Home = () => {
   // --- 4. LIKE BUTTON TOGGLE ---
   const toggleLike = async (id) => {
     setLikeError("");
+    const token = localStorage.getItem("token") || localStorage.getItem("foodPartnertoken");
 
     try {
       const response = await axios.post(
         "https://zomato-reel-app-backend.vercel.app/api/food/like",
         { foodId: id },
-        { withCredentials: true }
+        {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+          withCredentials: true,
+        }
       );
-      console.log("Like response:", response.data);
+      console.log("=== LIKE API RESPONSE ===", response.data);
 
       setLikedIds((current) => {
         const isLiked = response.data.liked;
@@ -175,19 +187,25 @@ const Home = () => {
       }));
     } catch (error) {
       const message = error.response?.data?.message || "Like save nahi ho saka";
+      console.error("Like error details:", error.response?.data || error.message);
       setLikeError(message);
     }
   };
 
   // --- 5. SAVE / BOOKMARK BUTTON TOGGLE ---
   const toggleSave = async (foodId) => {
+    const token = localStorage.getItem("token") || localStorage.getItem("foodPartnertoken");
+
     try {
       const response = await axios.post(
         "https://zomato-reel-app-backend.vercel.app/api/food/save",
         { foodId: foodId },
-        { withCredentials: true }
+        {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+          withCredentials: true,
+        }
       );
-      console.log("Save response:", response.data);
+      console.log("=== SAVE API RESPONSE ===", response.data);
 
       setSavedIds((current) => {
         const isSaved = response.data.saved ?? !current.includes(foodId);
@@ -198,7 +216,7 @@ const Home = () => {
         }
       });
     } catch (error) {
-      console.error("Save error:", error.response?.data || error.message);
+      console.error("Save error details:", error.response?.data || error.message);
     }
   };
 
@@ -237,11 +255,10 @@ const Home = () => {
           />
 
           <div className="reel-overlay">
-            {/* Title, Description & Visit Store Button (Above bottom nav) */}
             <div className="reel-content">
               <h3 className="reel-title">{item.name || item.title || "Special Dish"}</h3>
               <p className="reel-description">{item.description}</p>
-              
+
               <Link
                 to={`/food-partner/${item.foodPartner || item.partnerId}`}
                 className="visit-store-btn"
@@ -251,7 +268,6 @@ const Home = () => {
               </Link>
             </div>
 
-            {/* Right Side Floating Actions */}
             <div className="reel-actions">
               {/* Like Button */}
               <button
