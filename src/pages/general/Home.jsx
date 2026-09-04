@@ -160,6 +160,7 @@ const Home = () => {
         { foodId: id },
         { withCredentials: true }
       );
+      console.log("Like response:", response.data);
 
       setLikedIds((current) => {
         const isLiked = response.data.liked;
@@ -186,6 +187,7 @@ const Home = () => {
         { foodId: foodId },
         { withCredentials: true }
       );
+      console.log("Save response:", response.data);
 
       setSavedIds((current) => {
         const isSaved = response.data.saved ?? !current.includes(foodId);
