@@ -22,7 +22,7 @@ const FoodPartnerRegister = () => {
 
         try{
 
-        const response = await axios.post("http://localhost:3000/api/auth/food-partner/register", {
+        const response = await axios.post("https://zomato-reel-app-backend.vercel.app/api/auth/food-partner/register", {
             Businessname: Businessname,
             Ownername: Ownername,
             address: address,

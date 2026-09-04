@@ -13,7 +13,7 @@ const Profile = () => {
         const token = localStorage.getItem("foodPartnertoken");
         console.log("Token from localStorage:", token);
         // Backend se Food Partner aur uski Videos fetch karna
-        axios.get(`http://localhost:3000/api/food-partner/${id}`,  {
+        axios.get(`https://zomato-reel-app-backend.vercel.app/api/food-partner/${id}`,  {
             headers: {
             Authorization: `Bearer ${token}` // Backend middleware req.headers.authorization se read karega
         }}

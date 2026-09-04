@@ -59,7 +59,7 @@ const Saved = () => {
     // 1. Page render par database se saved items lana
     useEffect(() => {
         axios
-            .get("http://localhost:3000/api/food/saved-items", { withCredentials: true })
+            .get("https://zomato-reel-app-backend.vercel.app/api/food/saved-items", { withCredentials: true })
             .then((res) => {
                 if (res.data?.savedFoods && res.data.savedFoods.length > 0) {
                     setSavedFoods(res.data.savedFoods);
@@ -80,7 +80,7 @@ const Saved = () => {
     const removeSaved = async (foodId) => {
         try {
             await axios.post(
-                "http://localhost:3000/api/food/save",
+                "https://zomato-reel-app-backend.vercel.app/api/food/save",
                 { foodId },
                 { withCredentials: true }
             );

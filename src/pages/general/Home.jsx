@@ -96,7 +96,7 @@ const Home = () => {
   // --- 1. BACKEND SE VIDEOS AUR USER DATA FETCH ---
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/food/get-items", { withCredentials: true })
+      .get("https://zomato-reel-app-backend.vercel.app/api/food/get-items", { withCredentials: true })
       .then((response) => {
         if (response.data && response.data.foodItems && response.data.foodItems.length > 0) {
           setVideos(response.data.foodItems);
@@ -156,7 +156,7 @@ const Home = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/food/like",
+        "https://zomato-reel-app-backend.vercel.app/api/food/like",
         { foodId: id },
         { withCredentials: true }
       );
@@ -182,7 +182,7 @@ const Home = () => {
   const toggleSave = async (foodId) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/food/save",
+        "https://zomato-reel-app-backend.vercel.app/api/food/save",
         { foodId: foodId },
         { withCredentials: true }
       );

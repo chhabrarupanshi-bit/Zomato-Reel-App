@@ -18,7 +18,7 @@ const UserRegister = () => {
 
         console.log("Form submitted:", { firstName, lastName, email, password });
 
-        const response = await axios.post('http://localhost:3000/api/auth/user/register' , {
+        const response = await axios.post('https://zomato-reel-app-backend.vercel.app/api/auth/user/register' , {
             fullName : firstName + " " + lastName ,
             email : email ,
             password : password

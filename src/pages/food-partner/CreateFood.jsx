@@ -75,7 +75,7 @@ const CreateFood = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:3000/api/food/',
+        'https://zomato-reel-app-backend.vercel.app/api/food/',
         submitData,
         {
           withCredentials: true,
