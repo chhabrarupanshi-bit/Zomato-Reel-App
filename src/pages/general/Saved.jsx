@@ -7,9 +7,9 @@ import "./home.css";
 const demoSavedFood = [
     {
         _id: "demo-1",
-        vedios: "https://ik.imagekit.io/odlhfbqhh/141e60f7-a2e8-4106-8c6c-fc3ac5fdb6d1_pjKVvByee.mp4",
-        name: "Delicious Pizza",
-        description: "Freshly baked wood-fired pizza with extra cheese!",
+        vedios: "https://ik.imagekit.io/aknzkcjdb/a2918f8a-7d21-4b26-b324-4c812441f1d9_QsWBuaCF3.mp4",
+        name: "Strawberry Smoothie",
+        description: "Delicious and refreshing strawberry smoothie.",
     }
 ];
 
