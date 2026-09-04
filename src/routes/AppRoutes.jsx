@@ -16,22 +16,26 @@ const AppRoutes = () => {
         {/* Default Route */}
         <Route path="/" element={<Navigate to="/home" replace />} />
 
-        {/* Auth routes */}
+        {/* User Auth */}
         <Route path="/user/register" element={<UserRegister />} />
         <Route path="/user/login" element={<UserLogin />} />
-        <Route path="/foodpartner/register" element={<FoodPartnerRegister />} />
-        <Route path="/foodpartner/login" element={<FoodPartnerLogin />} />
 
-        {/* User feeds & saved */}
+        {/* Food Partner Auth (Dono common URL variants supported) */}
+        <Route path="/food-partner/login" element={<FoodPartnerLogin />} />
+        <Route path="/foodpartner/login" element={<FoodPartnerLogin />} />
+        <Route path="/food-partner/register" element={<FoodPartnerRegister />} />
+        <Route path="/foodpartner/register" element={<FoodPartnerRegister />} />
+
+        {/* Feeds & Actions */}
         <Route path="/home" element={<Home />} />
         <Route path="/saved" element={<Saved />} />
-
-        {/* Food partner routes */}
         <Route path="/create-food" element={<CreateFood />} />
+
+        {/* Profile Dynamic Route (Always keep after static partner routes) */}
         <Route path="/food-partner/:id" element={<Profile />} />
       </Routes>
     </Router>
   )
 }
 
-export default AppRoutes
+export default AppRoutes;
