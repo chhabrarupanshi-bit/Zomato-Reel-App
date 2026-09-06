@@ -85,6 +85,7 @@ const Saved = () => {
                 { foodId },
                 { withCredentials: true }
             );
+            console.log("Food removed from saved items:", foodId);
         } catch (err) {
             console.warn("Backend offline, removing from local screen state:", err.message);
         }
