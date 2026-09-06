@@ -62,6 +62,7 @@ const Saved = () => {
             .get("https://zomato-reel-app-backend.vercel.app/api/food/saved-items", { withCredentials: true })
             .then((res) => {
                 if (res.data?.savedFoods && res.data.savedFoods.length > 0) {
+                    console.log("Saved foods fetched from backend:", res.data.savedFoods);
                     setSavedFoods(res.data.savedFoods);
                 } else {
                     setSavedFoods(demoSavedFood);
